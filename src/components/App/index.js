@@ -4,6 +4,7 @@ import './App.css';
 import Image from '../Image';
 import Button from '../Button';
 import List from '../List';
+import Form from '../Form';
 
 const dataList = ['title 1', 'title 2', 'title 3'];
 
@@ -11,10 +12,24 @@ const dataList = ['title 1', 'title 2', 'title 3'];
 function App() {
 
   const [done, setDone] = useState(false);
+  const [data, setData] = useState('asd');
 
   const handleClick = () => {
     console.log('hello')
     setDone(!done)
+  }
+
+  const handleForm = (e) => {
+    e.preventDefault();
+    console.log(e.target.thing.value);
+    console.log(data);
+    if (Array.isArray(data)) {
+      console.log('IF');
+      setData([...data, e.target.thing.value])
+    } else {
+      console.log('ELSE');
+      setData([e.target.thing.value])
+    };
   }
 
   return (
@@ -42,11 +57,13 @@ function App() {
         text="Learn React FUN"
       />
 
-      <div style={{width: '200px', height: '100px', backgroundColor: done ? 'green' : 'red'}}>
+      <div style={{ width: '200px', height: '100px', backgroundColor: done ? 'green' : 'red' }}>
 
       </div>
 
-      <List dataList={dataList} />
+      <Form handler={handleForm} />
+
+      <List dataList={data} />
     </div>
   );
 }

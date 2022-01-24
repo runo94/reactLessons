@@ -1,5 +1,6 @@
 const Button = (props) => {
     const { type, link, targetType, text, handler } = props;
+    
     if (type === 'link') {
         return (
             <a href={link} target={targetType}>

@@ -6,20 +6,26 @@ const List = (props) => {
     const handleClick = (name) => {
         console.log(`hello ${name}`);
     }
+    
+    if (Array.isArray(dataList)){
+        return (
+            <ul>
+                {
+                    dataList.map((item, index) => (
+                        <li key={`${item}-${index}`}>
+                            <Button
+                                handler={() => handleClick(item)}
+                            /> {item}
+                        </li>
+                    ))
+                }
+            </ul>
+        )
+    } else {
+        return '';
+    }
 
-    return (
-        <ul>
-            {
-                dataList.map((item) => (
-                    <li>
-                        <Button
-                            handler={() => handleClick(item)}
-                        /> {item}
-                    </li>
-                ))
-            }
-        </ul>
-    )
+    
 }
 
 export default List;
