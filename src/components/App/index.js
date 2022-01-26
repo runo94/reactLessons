@@ -1,69 +1,49 @@
 import { useState } from 'react';
+import Form from '../Form';
+import ToDoList from '../ToDoList';
 
 import './App.css';
-import Image from '../Image';
-import Button from '../Button';
-import List from '../List';
-import Form from '../Form';
-
-const dataList = ['title 1', 'title 2', 'title 3'];
-
 
 function App() {
 
-  const [done, setDone] = useState(false);
-  const [data, setData] = useState('asd');
+  const [toDo, setToDo] = useState([])
+  const [done, setDone] = useState([]);
 
-  const handleClick = () => {
-    console.log('hello')
-    setDone(!done)
-  }
-
-  const handleForm = (e) => {
+  const handleAdd = (e) => {
     e.preventDefault();
-    console.log(e.target.thing.value);
-    console.log(data);
-    if (Array.isArray(data)) {
-      console.log('IF');
-      setData([...data, e.target.thing.value])
-    } else {
-      console.log('ELSE');
-      setData([e.target.thing.value])
-    };
+    if (e.target.task.value.length > 0) {
+      setToDo([
+        ...toDo,
+        {
+          "id": toDo.length + 1,
+          "task": e.target.task.value,
+          "date": new Date(),
+          "status": 'todo'
+        }
+      ])
+    }
+
+    e.target.reset()
   }
+
+  const handleMove = (e, item) => {
+    e.preventDefault();
+    setDone([...done, item]);
+    toDo.splice(toDo.indexOf(item), 1);
+  }
+
+  const handleDelete = (e, item) => {
+    e.preventDefault();
+    setToDo(toDo.filter(elem => elem.id !== item.id));
+  }
+
+  console.log('done', done);
+  console.log('todo', toDo);
 
   return (
-    <div className="App">
-      <header className="App-header">
-      </header>
-      <Image
-        image="https://pbs.twimg.com/media/FIrNiNHX0AAd-up?format=jpg&name=small"
-        myAlt="Ded"
-        mytitle="Mazai"
-      />
-      <p onClick={handleClick}>
-        Edit <code>src/App.js</code> and save to reload.
-      </p>
-
-      <Button
-        type="link"
-        link="https://reactjs.org"
-        targetType="_blank"
-        text="Learn React"
-      />
-
-      <Button
-        handler={handleClick}
-        text="Learn React FUN"
-      />
-
-      <div style={{ width: '200px', height: '100px', backgroundColor: done ? 'green' : 'red' }}>
-
-      </div>
-
-      <Form handler={handleForm} />
-
-      <List dataList={data} />
+    <div className="app">
+      <Form handleClick={handleAdd} />
+      <ToDoList data={toDo} handleMove={handleMove} handleDelete={handleDelete} />
     </div>
   );
 }
