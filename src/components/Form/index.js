@@ -1,13 +1,13 @@
-import './form.css'
+import './Form.css'
 
 const Form = (props) => {
-    const {handleClick} = props;
+    const { children, handleSubmit } = props;
     return (
-        <form onSubmit={(e) => handleClick(e)}>
-            <input type="text" name="task" placeholder="Enter your task" />
-            <input type="submit" value="GO" />
+        <form onSubmit={handleSubmit}>
+
+            {children}
         </form>
     )
-};
+}
 
 export default Form;

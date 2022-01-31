@@ -1,49 +1,120 @@
 import { useState } from 'react';
-import Form from '../Form';
-import ToDoList from '../ToDoList';
+import Button from '../Button';
+import Form from '../Form'
+import Input from '../Input';
 
-import './App.css';
+import './App.css'
+
+const NAME = 'name';
+const USER_NAME = 'userName';
+const EMAIL = 'email';
+const PHONE = 'phone';
+const PASSWORD = 'password';
+const CONFIRM_PASWORD = 'confirmPassword';
 
 function App() {
 
-  const [toDo, setToDo] = useState([])
-  const [done, setDone] = useState([]);
-
-  const handleAdd = (e) => {
-    e.preventDefault();
-    if (e.target.task.value.length > 0) {
-      setToDo([
-        ...toDo,
-        {
-          "id": toDo.length + 1,
-          "task": e.target.task.value,
-          "date": new Date(),
-          "status": 'todo'
-        }
-      ])
+  const [data, setData] = useState(
+    {
+      [NAME]: '',
+      [USER_NAME]: '',
+      [EMAIL]: '',
+      [PHONE]: '',
+      [PASSWORD]: '',
+      [CONFIRM_PASWORD]: '',
     }
+  );
 
-    e.target.reset()
-  }
 
-  const handleMove = (e, item) => {
+
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setDone([...done, item]);
-    toDo.splice(toDo.indexOf(item), 1);
+
   }
 
-  const handleDelete = (e, item) => {
+  const handleChange = (e) => {
     e.preventDefault();
-    setToDo(toDo.filter(elem => elem.id !== item.id));
+
+    setData({ ...data, [e.target.name]: e.target.value });
   }
 
-  console.log('done', done);
-  console.log('todo', toDo);
+  const handleBlur = (e) => {
+    e.preventDefault();
+
+    setData({ ...data, [e.target.name]: e.target.value });
+  }
+
+  const handleCheckbox = () => {
+
+  }
+
+  console.log(data);
 
   return (
     <div className="app">
-      <Form handleClick={handleAdd} />
-      <ToDoList data={toDo} handleMove={handleMove} handleDelete={handleDelete} />
+      <Form
+        handleSubmit={handleSubmit}
+      >
+        <Input
+          placeholder="Введите Имя"
+          name={NAME}
+          label="Имя"
+          type="text"
+          handleChange={handleChange}
+          handleBlur={handleBlur}
+        />
+        <Input
+          placeholder="Введите Имя Пользователя"
+          name="userName"
+          label="Имя Пользователя"
+          type="text"
+          handleChange={handleChange}
+          handleBlur={handleBlur}
+        />
+        <Input
+          placeholder="Введите Email"
+          name={EMAIL}
+          label="Email"
+          type="email"
+          handleChange={handleChange}
+          handleBlur={handleBlur}
+        />
+        <Input
+          placeholder="Введите Телефон"
+          name={PHONE}
+          label="Телефон"
+          type="text"
+          handleChange={handleChange}
+          handleBlur={handleBlur}
+        />
+        <Input
+          placeholder="Введите Пароль"
+          name={PASSWORD}
+          label="Пароль"
+          type="password"
+          handleChange={handleChange}
+          handleBlur={handleBlur}
+        />
+        <Input
+          placeholder="Введите Пароль"
+          name={CONFIRM_PASWORD}
+          label="Дубликат Пароля"
+          type="password"
+          handleChange={handleChange}
+          handleBlur={handleBlur}
+        />
+
+        <>
+          <Input
+            name="terms"
+            label="Ознакомлен с правилами"
+            type="checkbox"
+            isChecked={isChecked}
+          />
+          <Button />
+        </>
+      </Form>
     </div>
   );
 }
