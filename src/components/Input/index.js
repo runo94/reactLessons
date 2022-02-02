@@ -1,17 +1,28 @@
 import './Input.css'
 
-const Input = ({placeholder, type, name, label, handleChange, handleBlur}) => {
+const Input = ({ placeholder,
+    type,
+    name,
+    label,
+    handleChange,
+    handleBlur,
+    isChecked,
+    handleCheckbox,
+    errorMsg }) => {
     return (
         <label htmlFor={name}>
             {label}
-            <br/>
-            <input 
+            <br />
+            <input
                 onChange={handleChange}
                 onBlur={handleBlur}
-                placeholder={placeholder} 
+                onClick={handleCheckbox}
+                placeholder={placeholder}
                 type={type}
                 name={name}
+                checked={isChecked}
             />
+            {!!errorMsg && <span>{errorMsg}</span>}
         </label>
     )
 }

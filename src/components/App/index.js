@@ -2,8 +2,12 @@ import { useState } from 'react';
 import Button from '../Button';
 import Form from '../Form'
 import Input from '../Input';
+import Checkbox from '../Checkbox'
+import { validation } from '../../utils/validation';
+
 
 import './App.css'
+import { isLabelWithInternallyDisabledControl } from '@testing-library/user-event/dist/utils';
 
 const NAME = 'name';
 const USER_NAME = 'userName';
@@ -13,19 +17,36 @@ const PASSWORD = 'password';
 const CONFIRM_PASWORD = 'confirmPassword';
 
 function App() {
-
   const [data, setData] = useState(
     {
-      [NAME]: '',
-      [USER_NAME]: '',
-      [EMAIL]: '',
-      [PHONE]: '',
-      [PASSWORD]: '',
-      [CONFIRM_PASWORD]: '',
+      [NAME]: {
+        value: '',
+        error: null
+      },
+      [USER_NAME]: {
+        value: '',
+        error: null
+      },
+      [EMAIL]: {
+        value: '',
+        error: null
+      },
+      [PHONE]: {
+        value: '',
+        error: null
+      },
+      [PASSWORD]: {
+        value: '',
+        error: null
+      },
+      [CONFIRM_PASWORD]: {
+        value: '',
+        error: null
+      },
     }
   );
 
-
+  const [isChecked, setIsChecked] = useState(false);
 
 
   const handleSubmit = (e) => {
@@ -35,21 +56,22 @@ function App() {
 
   const handleChange = (e) => {
     e.preventDefault();
-
-    setData({ ...data, [e.target.name]: e.target.value });
+    if (e.target.type !== 'checkbox') {
+      setData({ ...data, [e.target.name]: { value: e.target.value, error: null } });
+    }
   }
 
   const handleBlur = (e) => {
     e.preventDefault();
 
-    setData({ ...data, [e.target.name]: e.target.value });
+    setData({ ...data, [e.target.name]: { value: e.target.value, error: validation([e.target.name], e.target.value) } });
   }
 
-  const handleCheckbox = () => {
+  const handleCheckbox = (e) => {
+
+    setIsChecked(!isChecked)
 
   }
-
-  console.log(data);
 
   return (
     <div className="app">
@@ -63,6 +85,7 @@ function App() {
           type="text"
           handleChange={handleChange}
           handleBlur={handleBlur}
+          errorMsg={data[NAME].error}
         />
         <Input
           placeholder="Введите Имя Пользователя"
@@ -105,15 +128,13 @@ function App() {
           handleBlur={handleBlur}
         />
 
-        <>
-          <Input
-            name="terms"
-            label="Ознакомлен с правилами"
-            type="checkbox"
-            isChecked={isChecked}
-          />
-          <Button />
-        </>
+        <Checkbox
+          name="terms"
+          label="Ознакомлен с правилами"
+          isChecked={isChecked}
+          handleCheckbox={handleCheckbox}
+        />
+        <Button />
       </Form>
     </div>
   );
