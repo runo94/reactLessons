@@ -1,36 +1,22 @@
-import { useState, useEffect } from 'react';
-import UserCard from '../UserCard';
-
+import {
+  BrowserRouter,
+  Route,
+  Routes
+} from 'react-router-dom';
+import HomePage from '../HomePage';
+import UserProfile from '../UserProfile';
 import './App.css'
 
 function App() {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    fetch('https://randomuser.me/api/?results=9')
-      .then(res => res.json())
-      .then(res => {
-        setData(res.results)
-      });
-  }, []);
-
-  console.log(data);
 
   return (
-    <div className="app">
-      {
-        data ?
-          data.map(user => (
-            <UserCard
-              photo={user.picture.large}
-              name={`${user.name.title} ${user.name.first} ${user.name.last}`}
-              gender={user.gender}
-              key={user.login.md5}
-            />
-          )) :
-        'Loading...' 
-      }
-    </div>
+    <BrowserRouter>
+      <h1>НЕМЕНЯЕТСЯ ТАЙТЛ</h1>
+      <Routes>
+        <Route path='/' element={<HomePage />} /> // /
+        <Route path='/user/:id' element={<UserProfile />} /> // /user/1176ea74-8355-4c2d-9424-bdfe6b47d632
+      </Routes>
+    </BrowserRouter>
   );
 }
 
