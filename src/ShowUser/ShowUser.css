@@ -1,0 +1,31 @@
+.back_arrow a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    border: none;
+    font-size: 20px;
+    font-weight: 700;
+    width: 30px;
+    height: 30px;
+    border: 1px solid red;
+    border-radius: 50%;
+    text-decoration: none;
+}
+
+.user-card {
+    position: absolute;
+    width: 400px;
+    top: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.user-photo {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    top: 10px;
+    right: 10px;
+}
