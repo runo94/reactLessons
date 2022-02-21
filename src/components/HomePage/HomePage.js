@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import './HomePage.css'
 import UserCard from '../UserCard/UserCard'
-import Pagination from '../Pagination/Pagination';
-import { useParams } from "react-router-dom";
+import { useParams, Outlet } from "react-router-dom";
 
 const USER_COUNTS = [3, 6, 9, 12, 15]
 
@@ -57,8 +56,7 @@ const HomePage = () => {
           />
         ))
       }
-
-      <Pagination handleClick={handleChangePage} />
+      <Outlet />
     </>
   )
 

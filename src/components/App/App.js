@@ -7,6 +7,8 @@ import {
   Routes,
   BrowserRouter
 } from "react-router-dom";
+import { Content } from '../CardsPagination/CardsPagination'
+
 import './App.css';
 
 function App() {
@@ -19,11 +21,12 @@ function App() {
         <h1 className='title'>About users</h1>
         <Routes>
 
+
           <Route path="/" element={<HomePage />} >
             <Route path=':page' element={<HomePage />} />
+            <Route index element={<Content />} />
           </Route>
-          <Route path="/user/:id" element={<ShowUser />} />
-
+            <Route path="user/:id" element={<ShowUser />} />
         </Routes>
 
 
