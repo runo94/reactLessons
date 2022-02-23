@@ -5,11 +5,13 @@ import React from "react";
 import {
   Route,
   Routes,
-  BrowserRouter
+  BrowserRouter,
+  Outlet
 } from "react-router-dom";
-import { Content } from '../CardsPagination/CardsPagination'
+import { CardsPagination } from '../CardsPagination/CardsPagination'
 
 import './App.css';
+import { Typography, Container, Box } from '@mui/material';
 
 function App() {
 
@@ -17,20 +19,18 @@ function App() {
   return (
     <BrowserRouter>
 
-      <div className="App">
-        <h1 className='title'>About users</h1>
-        <Routes>
-
-
-          <Route path="/" element={<HomePage />} >
-            <Route path=':page' element={<HomePage />} />
-            <Route index element={<Content />} />
-          </Route>
+      <Container>
+        <Box>
+          <Typography variant="h1">About users</Typography>
+          <Routes>
+            <Route path="/" element={<><Outlet /><CardsPagination /></>} >
+              <Route index element={<HomePage />} />
+              <Route path=':page' element={<HomePage />} />
+            </Route>
             <Route path="user/:id" element={<ShowUser />} />
-        </Routes>
-
-
-      </div>
+          </Routes>
+        </Box>
+      </Container>
 
     </BrowserRouter>
 

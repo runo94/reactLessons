@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import './HomePage.css'
 import UserCard from '../UserCard/UserCard'
 import { useParams, Outlet } from "react-router-dom";
+import { Grid, Select, FormControl, InputLabel, MenuItem } from '@mui/material';
 
 const USER_COUNTS = [3, 6, 9, 12, 15]
 
@@ -20,11 +21,7 @@ const HomePage = () => {
 
   useEffect(() => {
     getUsers(count, params.page)
-  }, [page]);
-
-  const handleChangePage = (e) => {
-    setPage(params.page)
-  }
+  }, [params]);
 
   const handleSelectChange = (e) => {
     setCount(e.target.value)
@@ -32,16 +29,37 @@ const HomePage = () => {
   }
 
   return (
-    <>
-      <select onChange={handleSelectChange}>
+    <Grid container spacing={2}>
+      {/* <Selection onChange={handleSelectChange}>
         {
           USER_COUNTS.map(i => {
-            return (<option value={i}>
+            return (<Options value={i}>
               {i}
-            </option>)
+            </Options>)
           })
         }
-      </select>
+      </Selection> */}
+
+      <FormControl fullWidth>
+        <InputLabel id="users-count-label">Users count</InputLabel>
+        <Select
+          labelId="users-count-label"
+          id="demo-simple-select"
+          value={count}
+          label="Users count"
+          onChange={handleSelectChange}
+        >
+          {
+            USER_COUNTS.map(i => {
+              return (
+                <MenuItem value={i}>
+                  {i}
+                </MenuItem>
+              )
+            })
+          }
+        </Select>
+      </FormControl>
 
       {
         data && data.map(user => (
@@ -57,7 +75,7 @@ const HomePage = () => {
         ))
       }
       <Outlet />
-    </>
+    </Grid>
   )
 
 }
